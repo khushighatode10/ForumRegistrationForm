@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forum Registration Form</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('pic1.avif'); 
+            background-size: cover; 
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .registration-form {
+            background-color: #c1bebe;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(2, 3, 51, 0.1);
+            width: 500px;
+            opacity: 0.8; 
+        }
+        .registration-form h1 {
+            color: #030000;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .registration-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .input-group {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        .input-group i {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: #aaa;
+        }
+        .input-group input,
+        .input-group select {
+            width: calc(100% - 40px);
+            padding: 8px 8px 8px 30px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+        }
+        .registration-form input[type="submit"] {
+            background-color: #14e21b;
+            color: #030000;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            padding: 10px 0;
+            border-radius: 3px;
+        }
+        .registration-form input[type="submit"]:hover {
+            background-color: #04fb10;
+        }
+        .error {
+            color: red;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="registration-form">
+        <h1>FORUM REGISTRATION FORM</h1>
+        <form id="registrationForm" onsubmit="return validateForm()">
+            <label for="fullname">Full Name</label>
+            <div class="input-group">
+                <i class="fas fa-user"></i>
+                <input type="text" id="fullname" name="fullname" placeholder="Enter your full name">
+            </div>
+            <div id="fullnameError" class="error"></div>
+            
+            <label for="email">Email</label>
+            <div class="input-group">
+                <i class="fas fa-envelope"></i>
+                <input type="text" id="email" name="email" placeholder="Enter your email">
+            </div>
+            <div id="emailError" class="error"></div>
+
+            <label for="password">Password</label>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="password" name="password" placeholder="Enter your password">
+            </div>
+            <div id="passwordError" class="error"></div>
+
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="input-group">
+                <i class="fas fa-lock"></i>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirm your password">
+            </div>
+            <div id="confirmPasswordError" class="error"></div>
+
+            <label for="DOB">Date of Birth</label>
+            <div class="input-group">
+                <i class="fas fa-calendar-alt"></i>
+                <input type="date" id="DOB" name="DOB">
+            </div>
+            <div id="DOBError" class="error"></div>
+
+            <label for="gender">Gender</label>
+            <div class="input-group">
+                <i class="fas fa-venus-mars"></i>
+                <select id="gender" name="gender">
+                    <option value="">Select Your Gender</option>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+            <div id="genderError" class="error"></div>
+
+            <label for="phone">Phone Number</label>
+            <div class="input-group">
+                <i class="fas fa-phone"></i>
+                <input type="text" id="phone" name="phone" placeholder="Enter your phone number">
+            </div>
+            <div id="phoneError" class="error"></div>
+
+            <input type="submit" value="Register">
+        </form>
+    </div>
+    <script>
+        function validateForm() {
+            document.getElementById('fullnameError').innerHTML = '';
+            document.getElementById('emailError').innerHTML = '';
+            document.getElementById('passwordError').innerHTML = '';
+            document.getElementById('confirmPasswordError').innerHTML = ''; 
+            document.getElementById('DOBError').innerHTML = '';
+            document.getElementById('genderError').innerHTML = '';
+            document.getElementById('phoneError').innerHTML = '';
+
+            var fullname = document.getElementById('fullname').value.trim();
+            var email = document.getElementById('email').value.trim();
+            var password = document.getElementById('password').value.trim();
+            var confirmPassword = document.getElementById('confirmPassword').value.trim();
+            var DOB = document.getElementById('DOB').value;
+            var gender = document.getElementById('gender').value;
+            var phone = document.getElementById('phone').value.trim();
+
+            var isValid = true;
+
+            if (fullname === "") {
+                document.getElementById('fullnameError').innerHTML = "Full Name is required";
+                isValid = false;
+            }
+
+            if (DOB === "") {
+                document.getElementById('DOBError').innerHTML = "Date of Birth is required";
+                isValid = false;
+            }
+            
+            var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === "") {
+                document.getElementById('emailError').innerHTML = "Email is required";
+                isValid = false;
+            } else if (!emailPattern.test(email)) {
+                document.getElementById('emailError').innerHTML = "Please enter a valid email address";
+                isValid = false;
+            }
+
+            if (password === "") {
+                document.getElementById('passwordError').innerHTML = "Password is required";
+                isValid = false;
+            } else if (password.length < 6) {
+                document.getElementById('passwordError').innerHTML = "Password must be at least 6 characters long";
+                isValid = false;
+            }
+
+            if (confirmPassword !== password) {
+                document.getElementById('confirmPasswordError').innerHTML = "Passwords do not match";
+                isValid = false;
+            }
+
+            if (gender === "") {
+                document.getElementById('genderError').innerHTML = "Gender is required";
+                isValid = false;
+            }
+
+            var phonePattern = /^[0-9]{10}$/;
+            if (phone === "") {
+                document.getElementById('phoneError').innerHTML = "Phone Number is required";
+                isValid = false;
+            } else if (!phonePattern.test(phone)) {
+                document.getElementById('phoneError').innerHTML = "Please enter a valid 10-digit phone number";
+                isValid = false;
+            }
+
+            if (isValid) {
+                alert("Registered Successfully!!!");
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>
